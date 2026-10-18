@@ -221,6 +221,10 @@
   white-space: pre;
 }
 
+.crosshair[data-flip="true"] .crosshair__readout {
+  transform: translate(calc(-100% - 10px), 8px);
+}
+
 /* Count-up stats along the bottom of the cover */
 .stats {
   display: grid;

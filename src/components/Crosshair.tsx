@@ -28,6 +28,7 @@ export function Crosshair() {
         el.style.setProperty("--x", `${x}px`);
         el.style.setProperty("--y", `${y}px`);
         if (readout) readout.textContent = `X ${String(x).padStart(4, "0")}  Y ${String(y).padStart(4, "0")}`;
+        el.dataset.flip = String(x > r.width - 140);
         el.dataset.on = "true";
       });
     };
