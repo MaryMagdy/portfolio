@@ -680,40 +680,10 @@ main {
   font-weight: 600;
 }
 
-/* Drawing register */
-.table-wrap {
-  overflow-x: auto;
-}
-
-.register {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.97rem;
-}
-
-.register th,
-.register td {
-  text-align: left;
-  vertical-align: top;
-  padding: 10px 14px 10px 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.register thead th {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 600;
-  color: var(--ink-soft);
-  border-bottom: 2px solid var(--ink);
-}
-
-.register tbody th {
-  font-weight: 600;
-  white-space: nowrap;
-}
-
+/* Status badges, shared by project cards */
 .status {
   white-space: nowrap;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   padding: 1px 8px;
   border: 1px solid var(--rule);
 }
@@ -726,34 +696,6 @@ main {
 .status--public {
   color: var(--ok);
   border-color: var(--ok);
-}
-
-@media (max-width: 760px) {
-  .register thead {
-    display: none;
-  }
-  .register,
-  .register tbody,
-  .register tr,
-  .register th,
-  .register td {
-    display: block;
-  }
-  .register tr {
-    padding: 14px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  .register th,
-  .register td {
-    border: 0;
-    padding: 2px 0;
-  }
-  .register td:nth-child(2) {
-    color: var(--ink-soft);
-  }
-  .register td:last-child {
-    margin-top: 6px;
-  }
 }
 
 /* Revision history */

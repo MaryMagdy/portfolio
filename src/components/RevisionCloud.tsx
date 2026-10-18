@@ -46,7 +46,7 @@ export function RevisionCloud({ children, className }: { children: ReactNode; cl
           viewBox={`${-pad} ${-pad} ${size.w + pad * 2} ${size.h + pad * 2}`}
           style={{ left: -pad, top: -pad }}
         >
-          <path d={cloudPath(size.w, size.h, 13)} />
+          <path d={cloudPath(size.w, size.h, 13)} pathLength={1} />
         </svg>
       )}
       {children}

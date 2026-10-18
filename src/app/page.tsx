@@ -2,12 +2,17 @@ import { Sheet } from "@/components/Sheet";
 import { TagParser } from "@/components/TagParser";
 import { RevisionCloud } from "@/components/RevisionCloud";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { bom, featured, notes, profile, register, revisions } from "@/content";
+import { RoleTyper } from "@/components/RoleTyper";
+import { Stats } from "@/components/Stats";
+import { Crosshair } from "@/components/Crosshair";
+import { ProjectGrid } from "@/components/ProjectGrid";
+import { PageEffects } from "@/components/PageEffects";
+import { bom, featured, notes, profile, projects, revisions, roles, stats, techFilters } from "@/content";
 
 const nav = [
   { href: "#notes", label: "Notes" },
-  { href: "#cases", label: "Projects" },
-  { href: "#register", label: "Register" },
+  { href: "#cases", label: "Case studies" },
+  { href: "#register", label: "All projects" },
   { href: "#revisions", label: "Experience" },
   { href: "#materials", label: "Skills" },
   { href: "#contact", label: "Contact" },
@@ -35,12 +40,12 @@ export default function Home() {
 
       <main id="main">
         <Sheet id="top" number={1} title="Cover sheet" heading={<span id="top-title" className="visually-hidden">Cover sheet</span>} className="sheet--cover">
+          <Crosshair />
+          <div className="cover__glow" aria-hidden="true" />
           <div className="cover">
             <div className="cover__text">
               <h1 className="cover__name">{profile.name}</h1>
-              <p className="cover__role">
-                {profile.role} in {profile.location}
-              </p>
+              <RoleTyper roles={roles} suffix={`in ${profile.location}`} />
               <p className="cover__statement">{profile.statement}</p>
               <RevisionCloud className="cover__cloud">
                 <p className="cover__cloud-text">
@@ -65,6 +70,7 @@ export default function Home() {
               <TagParser />
             </div>
           </div>
+          <Stats stats={stats} />
         </Sheet>
 
         <Sheet id="notes" number={2} title="General notes">
@@ -75,13 +81,15 @@ export default function Home() {
           </ol>
         </Sheet>
 
-        <Sheet id="cases" number={3} title="Selected projects">
+        <Sheet id="cases" number={3} title="Case studies">
           <div className="cases">
             {featured.map((c) => (
               <article key={c.title} className="case">
                 <header className="case__head">
                   <h3 className="case__title">{c.title}</h3>
-                  <p className="case__context">{[c.context, c.year].filter(Boolean).join(", ")}</p>
+                  <p className="case__context">
+                    {c.context}. <span className="case__role">{c.role}</span>
+                  </p>
                 </header>
                 <dl className="case__body">
                   <div>
@@ -117,33 +125,7 @@ export default function Home() {
         </Sheet>
 
         <Sheet id="register" number={4} title="Drawing register">
-          <div className="table-wrap">
-            <table className="register">
-              <caption className="visually-hidden">All projects</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Project</th>
-                  <th scope="col">For</th>
-                  <th scope="col">What it does</th>
-                  <th scope="col">Built with</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {register.map((r) => (
-                  <tr key={r.title}>
-                    <th scope="row">{r.href ? <a href={r.href} target="_blank" rel="noreferrer">{r.title}</a> : r.title}</th>
-                    <td>{r.client}</td>
-                    <td>{r.description}</td>
-                    <td>{r.stack}</td>
-                    <td>
-                      <span className={`status status--${r.status.replace(" ", "-").toLowerCase()}`}>{r.status}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ProjectGrid projects={projects} filters={techFilters} />
         </Sheet>
 
         <Sheet id="revisions" number={5} title="Revision history">
@@ -210,6 +192,7 @@ export default function Home() {
         </Sheet>
       </main>
 
+      <PageEffects />
       <footer className="foot">Mary Magdy Geady, Cairo. Built with Next.js and TypeScript.</footer>
     </>
   );

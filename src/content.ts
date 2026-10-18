@@ -1,9 +1,8 @@
 // Everything a visitor reads lives here, so updating the portfolio is editing
 // data, not markup.
 //
-// TODO(mary): the problem / decision / hard-part lines for iCAM and Workflow
-// Wizard are drafted from the CV bullets, not from you. Correct them, and
-// check with Abdelaal how much of the document-control project can be public.
+// TODO(mary): check with Abdelaal how much of the document-control project
+// can be public. Company repos are private, so they are described, not linked.
 
 export const profile = {
   name: "Mary Magdy Geady",
@@ -18,6 +17,15 @@ export const profile = {
   lookingFor: "Open to full-stack roles",
 };
 
+/** Rotated under the name on the cover, one at a time. */
+export const roles = [
+  "Full-stack developer",
+  "React and Angular",
+  "ASP.NET Core and Node.js",
+  "PostgreSQL and SQL Server",
+  "Workflow platforms",
+];
+
 export const notes: string[] = [
   "I started by replacing paper. At a sugar factory I turned approval forms, truck tickets and budget sign-offs into digital workflows. Most of my work since has been a bigger version of that job.",
   "Today I build enterprise software for the oil and gas sector: workflow platforms, report builders, integrations with engineering simulators, and document control for industrial plants.",
@@ -26,10 +34,19 @@ export const notes: string[] = [
   "I write things down. My projects carry architecture decision records, API contracts and a testing strategy, so the next person knows why the system is the way it is.",
 ];
 
+export type Stat = { value: number; suffix: string; label: string };
+
+export const stats: Stat[] = [
+  { value: 9, suffix: "+", label: "years building software" },
+  { value: 200, suffix: "+", label: "commits leading Workflow Wizard" },
+  { value: 5, suffix: "", label: "languages in one workflow platform" },
+  { value: 36, suffix: "", label: "tests guarding one help desk's data" },
+];
+
 export type Featured = {
   title: string;
   context: string;
-  year?: string;
+  role: string;
   stack: string[];
   problem: string;
   decision: string;
@@ -41,8 +58,8 @@ export type Featured = {
 export const featured: Featured[] = [
   {
     title: "Document control for industrial plants",
-    context: "Oil and gas, product in progress",
-    year: "2026",
+    context: "Oil and gas, product in progress, 2026",
+    role: "Tag grammar, hierarchy and search",
     stack: ["NestJS", "Next.js", "PostgreSQL", "MinIO", "Docker"],
     problem:
       "Plant documents are found by equipment tag, and every client writes tags differently, so a single hardcoded format would fit only one of them.",
@@ -54,35 +71,51 @@ export const featured: Featured[] = [
       "Making the folder a document is filed in also be its classification, so moving it updates everything that depends on it, while its issued number never changes.",
   },
   {
-    title: "iCAM",
-    context: "ADNOC",
-    stack: ["C#", "ASP.NET Core", "COM Interop", "Aspen HYSYS"],
-    problem:
-      "Separator vessel calculations lived inside Aspen HYSYS, a desktop process simulator, which made multi-year scenario planning slow and manual.",
-    decision:
-      "Drive HYSYS directly from a web application through COM Interop, so the simulator stays the source of truth while engineers work in the browser.",
-    result:
-      "A mission-critical web app that runs real-time separator calculations and plans scenarios across multiple years.",
-    hardPart:
-      "COM Interop with a desktop simulator was never designed for a web server's concurrency, so every call has to be managed carefully.",
-  },
-  {
     title: "Workflow Wizard",
-    context: "EGPC",
+    context: "EGPC, 2025",
+    role: "Lead developer, 200+ commits",
     stack: ["React 18", "TypeScript", "Vite", "TanStack Query", "PostgREST"],
     problem:
-      "Several companies needed one workflow platform, each with its own steps, people and language.",
+      "Companies across EGPC run approvals with different steps, forms and people, and their users work in different languages.",
     decision:
-      "Workflows are configured, not coded. PostgREST exposes the database directly as the API, and role-based access decides who sees and acts on each task.",
+      "Workflows, form templates and notifications are configured, not coded. The React front end talks to PostgREST, and role-based access decides who sees and acts on each task.",
     result:
-      "A multi-company platform in five languages, with dynamic configuration and task assignment.",
+      "Admins design, publish and run workflows with form, file and manual-approval tasks, tracked in real time, in English, Arabic, French, German and Spanish.",
     hardPart:
-      "Keeping five languages correct in a UI whose labels, steps and forms are themselves configured at runtime.",
+      "Keeping five languages, including right-to-left Arabic, correct in a UI whose labels, steps and forms are themselves configured at runtime.",
+  },
+  {
+    title: "Workflow Builder",
+    context: "Reusable component, 2026",
+    role: "Sole author",
+    stack: ["React", "TypeScript", "useReducer and Context", "JSON Schema"],
+    problem:
+      "Several apps needed admins to build approval workflows themselves, each app in its own visual style.",
+    decision:
+      "A theme-agnostic React component with two builders, a drag-and-drop canvas and a step-by-step form, that both write the same JSON workflow schema.",
+    result:
+      "Scope targeting, a trigger criteria engine and approval steps in one drop-in component. A saved workflow reopens in the builder it was made in, with its layout intact.",
+    hardPart:
+      "Keeping two very different editors at exact feature parity, so neither can produce a workflow the other can't open.",
+  },
+  {
+    title: "Daily Report System",
+    context: "EGPC refineries, 2025 to 2026",
+    role: "Front end and API contributor",
+    stack: ["React 18", "TypeScript", "shadcn/ui", "Node.js", "SQL Server"],
+    problem:
+      "Every refinery reports different daily figures, and the system had to run on a network with no internet access.",
+    decision:
+      "Admins build each refinery's report from reusable blocks, rows and columns with drag and drop, instead of developers coding a form per refinery. A Node.js and TypeScript API handles JWT sign-in and roles.",
+    result:
+      "Refineries submit structured daily reports in Arabic or English, with Excel import and export, deployed offline.",
+    hardPart:
+      "Right-to-left Arabic and left-to-right English sharing one dense data-entry grid without either one breaking.",
   },
   {
     title: "Support Ticket Management System",
-    context: "Open source",
-    year: "2026",
+    context: "Open source, 2026",
+    role: "Sole author",
     stack: ["ASP.NET Core 8", "Angular 17", "EF Core", "JWT"],
     problem:
       "A help desk where admins, agents and customers share one system, but a customer must never see another customer's tickets.",
@@ -96,56 +129,91 @@ export const featured: Featured[] = [
   },
 ];
 
-export type RegisterEntry = {
+export type Tech = "React" | "Angular" | ".NET" | "Node.js" | "Python" | "SharePoint";
+
+export const techFilters: Tech[] = ["React", "Angular", ".NET", "Node.js", "Python", "SharePoint"];
+
+export type Project = {
   title: string;
   client: string;
   description: string;
   stack: string;
+  tech: Tech[];
   status: "In progress" | "Delivered" | "Public" | "Personal";
   href?: string;
 };
 
-export const register: RegisterEntry[] = [
+export const projects: Project[] = [
   {
     title: "Document control platform",
     client: "Oil and gas",
-    description: "Configurable tag grammar, folder-based classification and database-enforced access.",
+    description: "Configurable tag grammar, folder-based classification and database-enforced access for plant documents.",
     stack: "NestJS, Next.js, PostgreSQL",
+    tech: ["Node.js", "React"],
     status: "In progress",
-  },
-  {
-    title: "iCAM",
-    client: "ADNOC",
-    description: "Aspen HYSYS through COM Interop for separator calculations and scenario planning.",
-    stack: "C#, ASP.NET Core",
-    status: "Delivered",
   },
   {
     title: "Workflow Wizard",
     client: "EGPC",
-    description: "Multi-company, five-language workflow platform with role-based access.",
+    description: "Multi-company workflow platform in five languages, with form templates, task types and notifications.",
     stack: "React, TanStack Query, PostgREST",
+    tech: ["React"],
+    status: "Delivered",
+  },
+  {
+    title: "Workflow Builder",
+    client: "OnSpec",
+    description: "Drop-in React component with a canvas builder and a step-by-step builder that write one schema.",
+    stack: "React, TypeScript",
+    tech: ["React"],
     status: "Delivered",
   },
   {
     title: "Daily Report System",
     client: "EGPC",
-    description: "Arabic and English drag-and-drop report builder for an offline site.",
-    stack: "React, Node.js, TypeScript",
+    description: "Arabic and English report builder for refineries, with Excel import and export, deployed offline.",
+    stack: "React, Node.js, SQL Server",
+    tech: ["React", "Node.js"],
+    status: "Delivered",
+  },
+  {
+    title: "iCAM",
+    client: "ADNOC",
+    description: "Web app that drives Aspen HYSYS through COM Interop for separator calculations and multi-year scenarios.",
+    stack: "C#, ASP.NET Core, COM Interop",
+    tech: [".NET"],
     status: "Delivered",
   },
   {
     title: "Integration Platform",
     client: "Oil and gas",
-    description: "API gateway plus a service moving 1M+ records every 5 seconds across SQL Server warehouses.",
+    description: "API gateway with JWT and API-key auth in front of a multi-database service for SQL Server warehouses.",
     stack: "Django, Docker, Jenkins",
+    tech: ["Python"],
+    status: "Delivered",
+  },
+  {
+    title: "Document Management System",
+    client: "OnSpec",
+    description: "Secure upload and download with role-based access, built on Clean Architecture.",
+    stack: "React, Express, PostgreSQL",
+    tech: ["React", "Node.js"],
+    status: "Delivered",
+  },
+  {
+    title: "Refinery KPI tools",
+    client: "Oil and gas",
+    description: "Scripts that clean KPI spreadsheets, generate limits and prepare SQL for loading.",
+    stack: "Python, SQL",
+    tech: ["Python"],
     status: "Delivered",
   },
   {
     title: "SyncPulse",
     client: "Independent",
-    description: "Runs daily stand-ups from GitHub activity, Google Meet and Calendar.",
+    description: "Runs daily stand-ups from GitHub activity, Google Meet and Google Calendar.",
     stack: "Angular, Google APIs, GitHub API",
+    tech: ["Angular"],
     status: "Delivered",
   },
   {
@@ -153,6 +221,7 @@ export const register: RegisterEntry[] = [
     client: "Open source",
     description: "Help desk with strict customer data isolation, backed by 36 tests.",
     stack: "ASP.NET Core 8, Angular 17",
+    tech: [".NET", "Angular"],
     status: "Public",
     href: "https://github.com/MaryMagdy/support-ticket-management-system",
   },
@@ -161,13 +230,40 @@ export const register: RegisterEntry[] = [
     client: "Personal",
     description: "Tracks applications, scores a CV against a job and rewrites it with an LLM.",
     stack: "Next.js 15, Supabase, Hono",
+    tech: ["React", "Node.js"],
+    status: "Personal",
+  },
+  {
+    title: "Number Systems Converter",
+    client: "Open source",
+    description: "Converts between binary, octal, decimal and hexadecimal, with a client and an API.",
+    stack: "React 19, Vite, Express, Tailwind CSS",
+    tech: ["React", "Node.js"],
+    status: "Public",
+    href: "https://github.com/MaryMagdy/number-systems-converter",
+  },
+  {
+    title: ".NET interview guide generator",
+    client: "Personal",
+    description: "Generates bilingual Word study guides on .NET internals, async and runtime behaviour.",
+    stack: "Python, python-docx",
+    tech: ["Python"],
     status: "Personal",
   },
   {
     title: "Factory workflow suite",
     client: "Nile Sugar",
-    description: "Budget, HSE, change request and truck delivery approvals moved off paper.",
+    description: "Budget, HSE, change request and truck delivery approvals moved off paper, with live dashboards.",
     stack: "SharePoint, SPFx, Power BI",
+    tech: ["SharePoint"],
+    status: "Delivered",
+  },
+  {
+    title: "Business systems",
+    client: "MAS Company",
+    description: "Inventory, supplier, customer, point-of-sale and HR applications.",
+    stack: "C#, ASP.NET MVC, SQL Server",
+    tech: [".NET"],
     status: "Delivered",
   },
 ];
@@ -227,7 +323,7 @@ export const bom: BomGroup[] = [
   },
   {
     use: "When the job needs it",
-    items: ["Django", "Jenkins", "SharePoint and SPFx", "COM Interop", "Power BI", "VB.NET"],
+    items: ["Django", "Python", "Jenkins", "SharePoint and SPFx", "COM Interop", "Power BI", "VB.NET"],
   },
   {
     use: "How I work",

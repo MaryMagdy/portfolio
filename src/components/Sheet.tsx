@@ -48,6 +48,9 @@ export function Sheet({
       </div>
 
       <div className="sheet__frame">
+        <svg className="sheet__draw" aria-hidden="true" preserveAspectRatio="none">
+          <rect x="0" y="0" width="100%" height="100%" pathLength={1} />
+        </svg>
         {heading ?? (
           <h2 id={`${id}-title`} className="sheet__heading">
             {title}
