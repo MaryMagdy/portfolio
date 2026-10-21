@@ -20,10 +20,9 @@ export const profile = {
 /** Rotated under the name on the cover, one at a time. */
 export const roles = [
   "Full-stack developer",
-  "React and Angular",
-  "ASP.NET Core and Node.js",
-  "PostgreSQL and SQL Server",
-  "Workflow platforms",
+  "React and Angular engineer",
+  "ASP.NET Core and Node.js developer",
+  "Workflow platform builder",
 ];
 
 export const notes: string[] = [
@@ -329,4 +328,95 @@ export const bom: BomGroup[] = [
     use: "How I work",
     items: ["System design", "Clean Architecture", "Role-based access", "i18n and RTL", "Test-driven development", "Architecture decision records"],
   },
+];
+
+export type Pillar = { key: "front" | "back" | "delivery"; title: string; body: string; tools: string[] };
+
+export const pillars: Pillar[] = [
+  {
+    key: "front",
+    title: "Interfaces people use every day",
+    body: "Data-heavy screens for engineers and operators: report builders, workflow designers and dashboards, in Arabic and English.",
+    tools: ["React", "Angular", "TypeScript", "TanStack Query", "Tailwind CSS", "RTL and i18n"],
+  },
+  {
+    key: "back",
+    title: "APIs and data that hold up",
+    body: "REST APIs and services over PostgreSQL and SQL Server, tuned in production and designed so the next feature does not need a rewrite.",
+    tools: ["ASP.NET Core", "Node.js", "NestJS", "PostgreSQL", "SQL Server", "PostgREST"],
+  },
+  {
+    key: "delivery",
+    title: "Access, workflows and delivery",
+    body: "Role-based access that is actually enforced, workflows clients configure themselves, and releases that reach sites with no internet connection.",
+    tools: ["RBAC", "Clean Architecture", "Microservices", "Docker", "GitHub Actions", "Jenkins"],
+  },
+];
+
+export type Depth = 3 | 2 | 1;
+export const depthLabel: Record<Depth, string> = { 3: "Daily", 2: "Regular", 1: "When needed" };
+
+export type SkillGroup = { key: string; label: string; skills: { name: string; depth: Depth }[] };
+
+export const skillGroups: SkillGroup[] = [
+  {
+    key: "front",
+    label: "Front end",
+    skills: [
+      { name: "TypeScript", depth: 3 },
+      { name: "React", depth: 3 },
+      { name: "Angular", depth: 3 },
+      { name: "Next.js", depth: 2 },
+      { name: "TanStack Query", depth: 2 },
+      { name: "Tailwind CSS and shadcn/ui", depth: 2 },
+      { name: "i18n and right-to-left layouts", depth: 2 },
+      { name: "jQuery", depth: 1 },
+    ],
+  },
+  {
+    key: "back",
+    label: "Back end",
+    skills: [
+      { name: "C# and ASP.NET Core", depth: 3 },
+      { name: "Node.js", depth: 3 },
+      { name: "NestJS", depth: 2 },
+      { name: "Express", depth: 2 },
+      { name: "Entity Framework Core and LINQ", depth: 2 },
+      { name: "PostgREST", depth: 2 },
+      { name: "Django", depth: 1 },
+      { name: "COM Interop and VB.NET", depth: 1 },
+    ],
+  },
+  {
+    key: "data",
+    label: "Data",
+    skills: [
+      { name: "PostgreSQL", depth: 3 },
+      { name: "SQL Server", depth: 3 },
+      { name: "Query optimisation", depth: 2 },
+      { name: "Stored procedures", depth: 2 },
+      { name: "Database design", depth: 2 },
+      { name: "Power BI", depth: 1 },
+    ],
+  },
+  {
+    key: "delivery",
+    label: "Architecture and delivery",
+    skills: [
+      { name: "Clean Architecture and SOLID", depth: 3 },
+      { name: "Role-based access (JWT, OAuth)", depth: 3 },
+      { name: "Microservices", depth: 2 },
+      { name: "Docker", depth: 2 },
+      { name: "GitHub Actions", depth: 2 },
+      { name: "Test-driven development", depth: 2 },
+      { name: "Jenkins", depth: 1 },
+      { name: "SharePoint and SPFx", depth: 1 },
+    ],
+  },
+];
+
+export const facts = [
+  { key: "location", label: "Based in", value: "Cairo, Egypt" },
+  { key: "open", label: "Open to", value: "Full-stack roles" },
+  { key: "languages", label: "Works in", value: "Arabic and English" },
 ];

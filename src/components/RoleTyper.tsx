@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // Types each role out, holds it, erases it, moves to the next. The first role
 // is rendered on the server, so the line is never empty without JavaScript.
-export function RoleTyper({ roles, suffix }: { roles: string[]; suffix: string }) {
+export function RoleTyper({ roles }: { roles: string[] }) {
   const [text, setText] = useState(roles[0]);
 
   useEffect(() => {
@@ -30,19 +30,16 @@ export function RoleTyper({ roles, suffix }: { roles: string[]; suffix: string }
       timer = setTimeout(tick, done ? 2200 : deleting ? 35 : 70);
     };
 
-    timer = setTimeout(tick, 3200);
+    timer = setTimeout(tick, 3000);
     return () => clearTimeout(timer);
   }, [roles]);
 
   return (
-    <p className="cover__role">
-      <span className="visually-hidden">
-        {roles.join(", ")} {suffix}
-      </span>
+    <p className="hero__role">
+      <span className="visually-hidden">{roles.join(", ")}</span>
       <span aria-hidden="true">
-        <span className="typer">{text}</span>
-        <span className="typer__caret" />
-        <span className="cover__role-suffix"> {suffix}</span>
+        <span className="hero__role-prompt">&gt;_</span> <span className="typer">{text}</span>
+        <span className="caret" />
       </span>
     </p>
   );

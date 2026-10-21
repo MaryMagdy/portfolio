@@ -1,37 +1,31 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import type { Project, Tech } from "@/content";
+import { GlowCard } from "./GlowCard";
 
 type Filter = "All" | Tech;
 
-// Every project as a small drawing card, filterable by technology. Changing
-// the filter replays a short staggered entrance so the visitor sees what
-// changed.
+// Every project as a glowing card, filterable by technology. Changing the
+// filter replays a short staggered entrance so the visitor sees what changed.
 export function ProjectGrid({ projects, filters }: { projects: Project[]; filters: Tech[] }) {
   const [filter, setFilter] = useState<Filter>("All");
-  const [run, setRun] = useState(0);
   const options: Filter[] = ["All", ...filters];
   const visible = filter === "All" ? projects : projects.filter((p) => p.tech.includes(filter));
-
   const count = (f: Filter) => (f === "All" ? projects.length : projects.filter((p) => p.tech.includes(f)).length);
 
   return (
     <div>
-      <div className="filters" role="group" aria-label="Filter projects by technology">
+      <div className="seg-tabs seg-tabs--wrap" role="group" aria-label="Filter projects by technology">
         {options.map((f) => (
-          <button
-            key={f}
-            type="button"
-            className="filters__btn"
-            aria-pressed={filter === f}
-            onClick={() => {
-              setFilter(f);
-              setRun((r) => r + 1);
-            }}
-          >
-            {f}
-            <span className="filters__count">{count(f)}</span>
+          <button key={f} type="button" className="seg-tabs__btn" aria-pressed={filter === f} onClick={() => setFilter(f)}>
+            {filter === f && <motion.span layoutId="proj-filter" className="seg-tabs__glow" transition={{ type: "spring", stiffness: 380, damping: 32 }} />}
+            <span className="seg-tabs__text">
+              {f}
+              <span className="seg-tabs__count">{count(f)}</span>
+            </span>
           </button>
         ))}
       </div>
@@ -40,25 +34,28 @@ export function ProjectGrid({ projects, filters }: { projects: Project[]; filter
         Showing {visible.length} projects
       </p>
 
-      <ul className="cards" key={run}>
+      <ul className="cards" key={filter}>
         {visible.map((p, i) => (
-          <li key={p.title} className="card" style={{ animationDelay: `${Math.min(i, 10) * 45}ms` }}>
-            <div className="card__top">
-              <span className={`status status--${p.status.replace(" ", "-").toLowerCase()}`}>{p.status}</span>
-              <span className="card__client">{p.client}</span>
+          <GlowCard key={p.title} as="li" className="card">
+            <div className="card__in" style={{ animationDelay: `${Math.min(i, 10) * 45}ms` }}>
+              <div className="card__top">
+                <span className={`badge badge--${p.status.replace(" ", "-").toLowerCase()}`}>{p.status}</span>
+                <span className="card__client">{p.client}</span>
+              </div>
+              <h3 className="card__title">
+                {p.href ? (
+                  <a href={p.href} target="_blank" rel="noreferrer">
+                    {p.title}
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </a>
+                ) : (
+                  p.title
+                )}
+              </h3>
+              <p className="card__desc">{p.description}</p>
+              <p className="card__stack">{p.stack}</p>
             </div>
-            <h3 className="card__title">
-              {p.href ? (
-                <a href={p.href} target="_blank" rel="noreferrer">
-                  {p.title}
-                </a>
-              ) : (
-                p.title
-              )}
-            </h3>
-            <p className="card__desc">{p.description}</p>
-            <p className="card__stack">{p.stack}</p>
-          </li>
+          </GlowCard>
         ))}
       </ul>
     </div>

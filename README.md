@@ -1,8 +1,10 @@
 # Mary Magdy Geady — portfolio
 
-Personal portfolio, designed as a set of engineering drawing sheets: each section has a frame, zone references and a title block, and red-line markup is used for the one thing that matters on each sheet.
+A dark, console-style portfolio: a live neural-mesh background, terminal windows that type themselves out, glass cards that tilt and light up under the pointer, and tabbed case studies. Skills are shown by how often they are used (daily, regular, when needed) rather than invented percentages.
 
-The cover sheet carries a live **tag parser**: a small grammar engine where an equipment-tag format is data, not code. Switch client and the same engine reads a different format.
+It also carries a live **tag parser**: a small grammar engine where an equipment-tag format is data, not code. Switch client and the same engine reads a different format.
+
+All motion stops for visitors who prefer reduced motion, and the content stays readable without JavaScript.
 
 ## Run it
 
@@ -16,7 +18,7 @@ npm run build      # static export to ./out
 
 ## Edit the content
 
-Everything a visitor reads is in [`src/content.ts`](src/content.ts): profile, notes, projects, experience and skills. Tag formats live in [`src/lib/tagGrammar.ts`](src/lib/tagGrammar.ts); add a grammar object to support a new format.
+Everything a visitor reads is in [`src/content.ts`](src/content.ts): profile, roles, stats, pillars, case studies, projects, skills and experience. Tag formats live in [`src/lib/tagGrammar.ts`](src/lib/tagGrammar.ts); add a grammar object to support a new format.
 
 ## Deploy
 

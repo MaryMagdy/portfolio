@@ -1,22 +1,34 @@
-import { Sheet } from "@/components/Sheet";
-import { TagParser } from "@/components/TagParser";
-import { RevisionCloud } from "@/components/RevisionCloud";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { RoleTyper } from "@/components/RoleTyper";
-import { Stats } from "@/components/Stats";
-import { Crosshair } from "@/components/Crosshair";
+import { ArrowUp, ArrowUpRight, Database, Download, Layers, ShieldCheck } from "lucide-react";
+import { Contact } from "@/components/Contact";
+import { GlowCard } from "@/components/GlowCard";
+import { Nav } from "@/components/Nav";
+import { NeuralMesh } from "@/components/NeuralMesh";
+import { ProfileTerminal } from "@/components/ProfileTerminal";
 import { ProjectGrid } from "@/components/ProjectGrid";
-import { PageEffects } from "@/components/PageEffects";
-import { bom, featured, notes, profile, projects, revisions, roles, stats, techFilters } from "@/content";
+import { Reveal } from "@/components/Reveal";
+import { RoleTyper } from "@/components/RoleTyper";
+import { SkillsMesh } from "@/components/SkillsMesh";
+import { Stats } from "@/components/Stats";
+import { Systems } from "@/components/Systems";
+import { TagParser } from "@/components/TagParser";
+import { TerminalWindow } from "@/components/TerminalWindow";
+import { featured, notes, pillars, profile, projects, revisions, roles, skillGroups, stats, techFilters } from "@/content";
 
-const nav = [
-  { href: "#notes", label: "Notes" },
-  { href: "#cases", label: "Case studies" },
-  { href: "#register", label: "All projects" },
-  { href: "#revisions", label: "Experience" },
-  { href: "#materials", label: "Skills" },
-  { href: "#contact", label: "Contact" },
-];
+const pillarIcon = { front: Layers, back: Database, delivery: ShieldCheck } as const;
+
+function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
+  return (
+    <Reveal className="section__head">
+      <p className="kicker">
+        <span className="kicker__path">~/{kicker}</span>
+      </p>
+      <h2 id={id} className="section__title">
+        {title}
+      </h2>
+      {intro && <p className="section__intro">{intro}</p>}
+    </Reveal>
+  );
+}
 
 export default function Home() {
   return (
@@ -24,176 +36,139 @@ export default function Home() {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      <header className="bar">
-        <a className="bar__name" href="#top">
-          Mary Magdy
-        </a>
-        <nav aria-label="Sections" className="bar__nav">
-          {nav.map((n) => (
-            <a key={n.href} href={n.href}>
-              {n.label}
-            </a>
-          ))}
-        </nav>
-        <ThemeToggle />
-      </header>
+      <NeuralMesh />
+      <div className="glows" aria-hidden="true" />
+      <Nav />
 
       <main id="main">
-        <Sheet id="top" number={1} title="Cover sheet" heading={<span id="top-title" className="visually-hidden">Cover sheet</span>} className="sheet--cover">
-          <Crosshair />
-          <div className="cover__glow" aria-hidden="true" />
-          <div className="cover">
-            <div className="cover__text">
-              <h1 className="cover__name">{profile.name}</h1>
-              <RoleTyper roles={roles} suffix={`in ${profile.location}`} />
-              <p className="cover__statement">{profile.statement}</p>
-              <RevisionCloud className="cover__cloud">
-                <p className="cover__cloud-text">
-                  <strong>Rev C.</strong> {profile.lookingFor}.
-                </p>
-              </RevisionCloud>
-              <div className="actions">
-                <a className="btn btn--solid" href={profile.cv} download>
-                  Download CV
-                </a>
-                <a className="btn" href={`mailto:${profile.email}`}>
-                  Email me
-                </a>
-              </div>
+        <section id="home" className="hero" aria-labelledby="home-title">
+          <div className="hero__text">
+            <p className="hero__status">
+              <i className="pulse" aria-hidden="true" />
+              Status: open to full-stack roles <span className="hero__status-sep">{"//"}</span> {profile.location}
+            </p>
+            <h1 id="home-title" className="hero__title">
+              <span className="hero__hello">Hello, I&apos;m</span>
+              <span className="hero__name">{profile.name}</span>
+            </h1>
+            <RoleTyper roles={roles} />
+            <p className="hero__statement">{profile.statement}</p>
+            <div className="actions">
+              <a className="btn btn--glow" href="#systems">
+                Explore my systems
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
+              <a className="btn btn--ghost" href={profile.cv} download>
+                <Download size={18} aria-hidden="true" />
+                Download CV (PDF)
+              </a>
             </div>
+          </div>
+          <ProfileTerminal />
+          <div className="hero__stats">
+            <Stats stats={stats} />
+          </div>
+        </section>
 
-            <div className="cover__demo">
-              <h2 className="cover__demo-title">Read a plant tag</h2>
-              <p className="cover__demo-intro">
-                Every plant names its equipment differently. This small parser reads a tag against a format that is data, not code. Type your own, or switch client and watch the same tag fail.
+        <section className="section" aria-labelledby="pillars-title" id="pillars">
+          <SectionHead id="pillars-title" kicker="pillars" title="What I build" intro={notes[0]} />
+          <ul className="pillars">
+            {pillars.map((p, i) => {
+              const Icon = pillarIcon[p.key];
+              return (
+                <Reveal as="li" key={p.key} delay={i * 120}>
+                  <GlowCard className={`pillar pillar--${p.key}`}>
+                    <span className="pillar__icon" aria-hidden="true">
+                      <Icon size={22} />
+                    </span>
+                    <h3 className="pillar__title">{p.title}</h3>
+                    <p className="pillar__body">{p.body}</p>
+                    <ul className="tags">
+                      {p.tools.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                  </GlowCard>
+                </Reveal>
+              );
+            })}
+          </ul>
+        </section>
+
+        <section className="section" aria-labelledby="systems-title" id="systems">
+          <SectionHead
+            id="systems-title"
+            kicker="systems"
+            title="Flagship systems"
+            intro="Five systems I've built or led, each with the problem, the decision that shaped it, and the part that was actually hard."
+          />
+          <Reveal>
+            <Systems items={featured} />
+          </Reveal>
+          <Reveal className="demo">
+            <div className="demo__text">
+              <h3 className="demo__title">Try it: read a plant tag</h3>
+              <p>
+                Every plant names its equipment differently. This small parser reads a tag against a format that is data, not code. Type your own, or switch client and watch the same
+                tag fail.
               </p>
-              <TagParser />
             </div>
-          </div>
-          <Stats stats={stats} />
-        </Sheet>
+            <TerminalWindow title="~/demos/tag_parser" status="live">
+              <TagParser />
+            </TerminalWindow>
+          </Reveal>
+        </section>
 
-        <Sheet id="notes" number={2} title="General notes">
-          <ol className="notes">
-            {notes.map((n) => (
-              <li key={n}>{n}</li>
+        <section className="section" aria-labelledby="projects-title" id="projects">
+          <SectionHead id="projects-title" kicker="projects" title="All projects" intro="Work and personal projects. Company repositories are private, so those are described rather than linked." />
+          <Reveal>
+            <ProjectGrid projects={projects} filters={techFilters} />
+          </Reveal>
+        </section>
+
+        <section className="section" aria-labelledby="skills-title" id="skills">
+          <SectionHead
+            id="skills-title"
+            kicker="skills"
+            title="Skills, by how often I use them"
+            intro="No made-up percentages. Each meter shows whether a tool is part of my daily work, something I use regularly, or one I reach for when a job needs it."
+          />
+          <Reveal>
+            <SkillsMesh groups={skillGroups} />
+          </Reveal>
+        </section>
+
+        <section className="section" aria-labelledby="experience-title" id="experience">
+          <SectionHead id="experience-title" kicker="experience" title="Experience" />
+          <ol className="timeline">
+            {revisions.map((r, i) => (
+              <Reveal as="li" key={r.rev} className="timeline__item" delay={i * 100}>
+                <span className="timeline__node" aria-hidden="true" />
+                <p className="timeline__dates">{r.dates}</p>
+                <h3 className="timeline__title">{r.title}</h3>
+                <p className="timeline__org">{r.org}</p>
+                <p className="timeline__desc">{r.description}</p>
+              </Reveal>
             ))}
           </ol>
-        </Sheet>
+        </section>
 
-        <Sheet id="cases" number={3} title="Case studies">
-          <div className="cases">
-            {featured.map((c) => (
-              <article key={c.title} className="case">
-                <header className="case__head">
-                  <h3 className="case__title">{c.title}</h3>
-                  <p className="case__context">
-                    {c.context}. <span className="case__role">{c.role}</span>
-                  </p>
-                </header>
-                <dl className="case__body">
-                  <div>
-                    <dt>Problem</dt>
-                    <dd>{c.problem}</dd>
-                  </div>
-                  <div>
-                    <dt>Decision</dt>
-                    <dd>{c.decision}</dd>
-                  </div>
-                  <div>
-                    <dt>Result</dt>
-                    <dd>{c.result}</dd>
-                  </div>
-                  <div>
-                    <dt>The hard part</dt>
-                    <dd>{c.hardPart}</dd>
-                  </div>
-                </dl>
-                <ul className="chips" aria-label="Built with">
-                  {c.stack.map((s) => (
-                    <li key={s}>{s}</li>
-                  ))}
-                </ul>
-                {c.link && (
-                  <a className="case__link" href={c.link.href} target="_blank" rel="noreferrer">
-                    {c.link.label}
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
-        </Sheet>
-
-        <Sheet id="register" number={4} title="Drawing register">
-          <ProjectGrid projects={projects} filters={techFilters} />
-        </Sheet>
-
-        <Sheet id="revisions" number={5} title="Revision history">
-          <ol className="revs">
-            {revisions.map((r) => (
-              <li key={r.rev} className="rev">
-                <svg className="rev__mark" viewBox="0 0 40 36" role="img" aria-label={`Revision ${r.rev}`}>
-                  <polygon points="20,2 38,34 2,34" />
-                  <text x="20" y="29" textAnchor="middle">
-                    {r.rev}
-                  </text>
-                </svg>
-                <div>
-                  <h3 className="rev__title">{r.title}</h3>
-                  <p className="rev__org">
-                    {r.org}, {r.dates}
-                  </p>
-                  <p className="rev__desc">{r.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Sheet>
-
-        <Sheet id="materials" number={6} title="Bill of materials">
-          <div className="bom">
-            {bom.map((g) => (
-              <section key={g.use} className="bom__group">
-                <h3>{g.use}</h3>
-                <ul>
-                  {g.items.map((i) => (
-                    <li key={i}>{i}</li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
-        </Sheet>
-
-        <Sheet id="contact" number={7} title="Contact">
-          <div className="contact">
-            <p className="contact__lead">Hiring for a full-stack role, or have something to build? Write to me and I'll reply.</p>
-            <ul className="contact__list">
-              <li>
-                <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              </li>
-              <li>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href={profile.github} target="_blank" rel="noreferrer">
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a href={profile.cv} download>
-                  Download CV (PDF)
-                </a>
-              </li>
-            </ul>
-          </div>
-        </Sheet>
+        <section className="section" aria-labelledby="contact-title" id="contact">
+          <SectionHead id="contact-title" kicker="contact" title="Let's talk" intro="Hiring for a full-stack role, or have something to build? Reach me on any of these." />
+          <Reveal>
+            <Contact />
+          </Reveal>
+        </section>
       </main>
 
-      <PageEffects />
-      <footer className="foot">Mary Magdy Geady, Cairo. Built with Next.js and TypeScript.</footer>
+      <footer className="foot">
+        <p>
+          <i className="pulse" aria-hidden="true" /> © 2026 Mary Magdy Geady. Built with Next.js, TypeScript and Framer Motion.
+        </p>
+        <a className="icon-btn" href="#home" aria-label="Back to top">
+          <ArrowUp size={18} />
+        </a>
+      </footer>
     </>
   );
 }

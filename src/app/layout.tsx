@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import { Barlow, Barlow_Condensed } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import "./motion.css";
 
-const body = Barlow({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-body", display: "swap" });
-const display = Barlow_Condensed({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-display", display: "swap" });
+const sans = Space_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-sans", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Mary Magdy | Full-stack developer",
@@ -12,14 +11,17 @@ export const metadata: Metadata = {
     "Full-stack developer with 9+ years building enterprise software in React, Angular, ASP.NET Core and Node. Based in Cairo, open to full-stack roles.",
 };
 
-// Runs before first paint so a saved theme never flashes the wrong one.
-const themeScript = `document.documentElement.classList.add("js");try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}`;
+export const viewport: Viewport = { themeColor: "#05070c", colorScheme: "dark" };
+
+// Marks the page as scripted before first paint, so scroll reveals only hide
+// content when they can also show it again.
+const jsFlag = `document.documentElement.classList.add("js")`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${body.variable} ${display.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
       </head>
       <body>{children}</body>
     </html>
