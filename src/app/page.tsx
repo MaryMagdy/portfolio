@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight, Database, Download, Layers, ShieldCheck } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Download, Factory, ShieldCheck, Sparkles, Workflow } from "lucide-react";
 import { Contact } from "@/components/Contact";
 import { GlowCard } from "@/components/GlowCard";
 import { Nav } from "@/components/Nav";
@@ -11,7 +11,7 @@ import { SkillsMesh } from "@/components/SkillsMesh";
 import { Stats } from "@/components/Stats";
 import { notes, pillars, profile, projects, revisions, roles, skillGroups, stats, techFilters } from "@/content";
 
-const pillarIcon = { front: Layers, back: Database, delivery: ShieldCheck } as const;
+const pillarIcon = { workflow: Workflow, data: Factory, rules: ShieldCheck, ai: Sparkles } as const;
 
 function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
   return (

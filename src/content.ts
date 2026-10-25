@@ -244,26 +244,35 @@ export const bom: BomGroup[] = [
   },
 ];
 
-export type Pillar = { key: "front" | "back" | "delivery"; title: string; body: string; tools: string[] };
+export type Pillar = { key: "workflow" | "data" | "rules" | "ai"; title: string; body: string; tools: string[] };
 
+// Drawn from my own commits: about 250 on workflow engines, about 100 on the
+// refinery reporting system, about 110 on configurable domain rules, and
+// about 70 on AI features in a personal project.
 export const pillars: Pillar[] = [
   {
-    key: "front",
-    title: "Interfaces people use every day",
-    body: "Data-heavy screens for engineers and operators: report builders, workflow designers and dashboards, in Arabic and English.",
-    tools: ["React", "Angular", "TypeScript", "TanStack Query", "Tailwind CSS", "RTL and i18n"],
+    key: "workflow",
+    title: "Workflow and approval platforms",
+    body: "Workflow engines that business teams configure themselves: approval chains, decision steps, file tasks, SLAs and notifications, drawn on a drag-and-drop canvas and run without a developer.",
+    tools: ["React", "TypeScript", "PostgREST", "TanStack Query", "RBAC", "Canvas builders"],
   },
   {
-    key: "back",
-    title: "APIs and data that hold up",
-    body: "REST APIs and services over PostgreSQL and SQL Server, tuned in production and designed so the next feature does not need a rewrite.",
-    tools: ["ASP.NET Core", "Node.js", "NestJS", "PostgreSQL", "SQL Server", "PostgREST"],
+    key: "data",
+    title: "Operational data for refineries and plants",
+    body: "Data entry and reporting for industrial operations: report builders shaped per refinery, computed totals, Excel import and export, and full audit trails, in Arabic and English, on sites with no internet.",
+    tools: ["React", "Node.js", "SQL Server", "RTL and i18n", "Excel", "Audit logging"],
   },
   {
-    key: "delivery",
-    title: "Access, workflows and delivery",
-    body: "Role-based access that is actually enforced, workflows clients configure themselves, and releases that reach sites with no internet connection.",
-    tools: ["RBAC", "Clean Architecture", "Microservices", "Docker", "GitHub Actions", "Jenkins"],
+    key: "rules",
+    title: "Rules as configuration, guarded by tests",
+    body: "Domain rules such as tag formats, hierarchies and identifier schemes live as validated configuration, not hardcoded branches. Every rule has a guard and a test, data access is enforced at the database, and every decision is written down.",
+    tools: ["NestJS", "PostgreSQL", "Migrations", "Automated tests", "ADRs", "Docker"],
+  },
+  {
+    key: "ai",
+    title: "Practical AI features",
+    body: "LLM features built with production habits: scoring a CV against a job, AI rewrites, fallback models and retry budgets for when the provider fails, and Arabic-safe PDF and Word export.",
+    tools: ["Next.js", "Supabase", "Gemini API", "Prompt design"],
   },
 ];
 
