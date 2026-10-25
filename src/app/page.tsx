@@ -54,8 +54,8 @@ export default function Home() {
             <RoleTyper roles={roles} />
             <p className="hero__statement">{profile.statement}</p>
             <div className="actions">
-              <a className="btn btn--glow" href="#systems">
-                Explore my systems
+              <a className="btn btn--glow" href="#projects">
+                Explore my projects
                 <ArrowUpRight size={18} aria-hidden="true" />
               </a>
               <a className="btn btn--ghost" href={profile.cv} download>
