@@ -1,6 +1,6 @@
 # Mary Magdy Geady — portfolio
 
-A dark, console-style portfolio: a live neural-mesh background, terminal windows that type themselves out, glass cards that tilt and light up under the pointer, and tabbed case studies. Skills are shown by how often they are used (daily, regular, when needed) rather than invented percentages.
+A dark, console-style portfolio: a live neural-mesh background, a 3D developer character built in three.js whose head follows the pointer, glass cards that tilt and light up under the pointer,. Skills are shown by how often they are used (daily, regular, when needed) rather than invented percentages.
 
 It also carries a live **tag parser**: a small grammar engine where an equipment-tag format is data, not code. Switch client and the same engine reads a different format.
 

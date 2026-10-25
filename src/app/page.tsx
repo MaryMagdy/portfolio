@@ -3,7 +3,7 @@ import { Contact } from "@/components/Contact";
 import { GlowCard } from "@/components/GlowCard";
 import { Nav } from "@/components/Nav";
 import { NeuralMesh } from "@/components/NeuralMesh";
-import { ProfileTerminal } from "@/components/ProfileTerminal";
+import { HeroCharacter } from "@/components/HeroCharacter";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
 import { RoleTyper } from "@/components/RoleTyper";
@@ -61,7 +61,7 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <ProfileTerminal />
+          <HeroCharacter />
           <div className="hero__stats">
             <Stats stats={stats} />
           </div>
