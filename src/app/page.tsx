@@ -1,9 +1,10 @@
-import { ArrowUp, ArrowUpRight, Download, Factory, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Download, Factory, Github, Linkedin, MapPin, ShieldCheck, Sparkles, Workflow } from "lucide-react";
 import { Contact } from "@/components/Contact";
 import { GlowCard } from "@/components/GlowCard";
 import { Nav } from "@/components/Nav";
 import { NeuralMesh } from "@/components/NeuralMesh";
-import { HeroCharacter } from "@/components/HeroCharacter";
+import { HeroMedia } from "@/components/HeroMedia";
+import { LocalTime } from "@/components/LocalTime";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
 import { RoleTyper } from "@/components/RoleTyper";
@@ -39,31 +40,46 @@ export default function Home() {
 
       <main id="main">
         <section id="home" className="hero" aria-labelledby="home-title">
-          <div className="hero__text">
-            <p className="hero__status">
-              <i className="pulse" aria-hidden="true" />
-              Status: open to full-stack roles <span className="hero__status-sep">{"//"}</span> {profile.location}
-            </p>
-            <h1 id="home-title" className="hero__title">
-              <span className="hero__hello">Hello, I&apos;m</span>
-              <span className="hero__name">{profile.name}</span>
-            </h1>
-            <RoleTyper roles={roles} />
-            <p className="hero__statement">{profile.statement}</p>
-            <div className="actions">
-              <a className="btn btn--glow" href="#projects">
-                Explore my projects
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </a>
-              <a className="btn btn--ghost" href={profile.cv} download>
-                <Download size={18} aria-hidden="true" />
-                Download CV (PDF)
-              </a>
+          <HeroMedia />
+          <div className="hero__inner">
+            <div className="hero__text">
+              <p className="hero__status">
+                <i className="pulse" aria-hidden="true" />
+                Status: open to full-stack roles
+              </p>
+              <h1 id="home-title" className="hero__title">
+                <span className="hero__hello">Hello, I&apos;m</span>
+                <span className="hero__name">{profile.name}</span>
+              </h1>
+              <RoleTyper roles={roles} />
+              <p className="hero__statement">{profile.statement}</p>
+              <div className="actions">
+                <a className="btn btn--glow" href="#projects">
+                  Explore my projects
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </a>
+                <a className="btn btn--ghost" href={profile.cv} download>
+                  <Download size={18} aria-hidden="true" />
+                  Download CV (PDF)
+                </a>
+              </div>
+              <div className="hero__meta">
+                <a className="icon-btn" href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                  <Github size={18} />
+                </a>
+                <a className="icon-btn" href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                  <Linkedin size={18} />
+                </a>
+                <span className="hero__where">
+                  <MapPin size={15} aria-hidden="true" />
+                  Currently in {profile.location}
+                </span>
+                <LocalTime />
+              </div>
             </div>
-          </div>
-          <HeroCharacter />
-          <div className="hero__stats">
-            <Stats stats={stats} />
+            <div className="hero__stats">
+              <Stats stats={stats} />
+            </div>
           </div>
         </section>
 
