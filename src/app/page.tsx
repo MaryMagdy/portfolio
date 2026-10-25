@@ -9,10 +9,7 @@ import { Reveal } from "@/components/Reveal";
 import { RoleTyper } from "@/components/RoleTyper";
 import { SkillsMesh } from "@/components/SkillsMesh";
 import { Stats } from "@/components/Stats";
-import { Systems } from "@/components/Systems";
-import { TagParser } from "@/components/TagParser";
-import { TerminalWindow } from "@/components/TerminalWindow";
-import { featured, notes, pillars, profile, projects, revisions, roles, skillGroups, stats, techFilters } from "@/content";
+import { notes, pillars, profile, projects, revisions, roles, skillGroups, stats, techFilters } from "@/content";
 
 const pillarIcon = { front: Layers, back: Database, delivery: ShieldCheck } as const;
 
@@ -93,30 +90,6 @@ export default function Home() {
               );
             })}
           </ul>
-        </section>
-
-        <section className="section" aria-labelledby="systems-title" id="systems">
-          <SectionHead
-            id="systems-title"
-            kicker="systems"
-            title="Flagship systems"
-            intro="Five systems I've built or led, each with the problem, the decision that shaped it, and the part that was actually hard."
-          />
-          <Reveal>
-            <Systems items={featured} />
-          </Reveal>
-          <Reveal className="demo">
-            <div className="demo__text">
-              <h3 className="demo__title">Try it: read a plant tag</h3>
-              <p>
-                Every plant names its equipment differently. This small parser reads a tag against a format that is data, not code. Type your own, or switch client and watch the same
-                tag fail.
-              </p>
-            </div>
-            <TerminalWindow title="~/demos/tag_parser" status="live">
-              <TagParser />
-            </TerminalWindow>
-          </Reveal>
         </section>
 
         <section className="section" aria-labelledby="projects-title" id="projects">

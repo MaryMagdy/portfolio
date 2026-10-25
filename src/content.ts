@@ -1,8 +1,8 @@
 // Everything a visitor reads lives here, so updating the portfolio is editing
 // data, not markup.
 //
-// TODO(mary): check with Abdelaal how much of the document-control project
-// can be public. Company repos are private, so they are described, not linked.
+// TODO(mary): check with Abdelaal that the document-control project can be
+// public. Company repos are private, so they are described, not linked.
 
 export const profile = {
   name: "Mary Magdy Geady",
@@ -40,92 +40,6 @@ export const stats: Stat[] = [
   { value: 200, suffix: "+", label: "commits leading Workflow Wizard" },
   { value: 5, suffix: "", label: "languages in one workflow platform" },
   { value: 36, suffix: "", label: "tests guarding one help desk's data" },
-];
-
-export type Featured = {
-  title: string;
-  context: string;
-  role: string;
-  stack: string[];
-  problem: string;
-  decision: string;
-  result: string;
-  hardPart: string;
-  link?: { label: string; href: string };
-};
-
-export const featured: Featured[] = [
-  {
-    title: "Document control for industrial plants",
-    context: "Oil and gas, product in progress, 2026",
-    role: "Tag grammar, hierarchy and search",
-    stack: ["NestJS", "Next.js", "PostgreSQL", "MinIO", "Docker"],
-    problem:
-      "Plant documents are found by equipment tag, and every client writes tags differently, so a single hardcoded format would fit only one of them.",
-    decision:
-      "Tag formats are data: a grammar engine reads each client's rules, so a new format is configuration rather than a code change. Access rules are enforced by the database itself, not left to the application to remember.",
-    result:
-      "One codebase that serves different clients, tested in CI against two deliberately different client setups, and deployable to sites with no internet connection.",
-    hardPart:
-      "Making the folder a document is filed in also be its classification, so moving it updates everything that depends on it, while its issued number never changes.",
-  },
-  {
-    title: "Workflow Wizard",
-    context: "EGPC, 2025",
-    role: "Lead developer, 200+ commits",
-    stack: ["React 18", "TypeScript", "Vite", "TanStack Query", "PostgREST"],
-    problem:
-      "Companies across EGPC run approvals with different steps, forms and people, and their users work in different languages.",
-    decision:
-      "Workflows, form templates and notifications are configured, not coded. The React front end talks to PostgREST, and role-based access decides who sees and acts on each task.",
-    result:
-      "Admins design, publish and run workflows with form, file and manual-approval tasks, tracked in real time, in English, Arabic, French, German and Spanish.",
-    hardPart:
-      "Keeping five languages, including right-to-left Arabic, correct in a UI whose labels, steps and forms are themselves configured at runtime.",
-  },
-  {
-    title: "Workflow Builder",
-    context: "Reusable component, 2026",
-    role: "Sole author",
-    stack: ["React", "TypeScript", "useReducer and Context", "JSON Schema"],
-    problem:
-      "Several apps needed admins to build approval workflows themselves, each app in its own visual style.",
-    decision:
-      "A theme-agnostic React component with two builders, a drag-and-drop canvas and a step-by-step form, that both write the same JSON workflow schema.",
-    result:
-      "Scope targeting, a trigger criteria engine and approval steps in one drop-in component. A saved workflow reopens in the builder it was made in, with its layout intact.",
-    hardPart:
-      "Keeping two very different editors at exact feature parity, so neither can produce a workflow the other can't open.",
-  },
-  {
-    title: "Daily Report System",
-    context: "EGPC refineries, 2025 to 2026",
-    role: "Front end and API contributor",
-    stack: ["React 18", "TypeScript", "shadcn/ui", "Node.js", "SQL Server"],
-    problem:
-      "Every refinery reports different daily figures, and the system had to run on a network with no internet access.",
-    decision:
-      "Admins build each refinery's report from reusable blocks, rows and columns with drag and drop, instead of developers coding a form per refinery. A Node.js and TypeScript API handles JWT sign-in and roles.",
-    result:
-      "Refineries submit structured daily reports in Arabic or English, with Excel import and export, deployed offline.",
-    hardPart:
-      "Right-to-left Arabic and left-to-right English sharing one dense data-entry grid without either one breaking.",
-  },
-  {
-    title: "Support Ticket Management System",
-    context: "Open source, 2026",
-    role: "Sole author",
-    stack: ["ASP.NET Core 8", "Angular 17", "EF Core", "JWT"],
-    problem:
-      "A help desk where admins, agents and customers share one system, but a customer must never see another customer's tickets.",
-    decision:
-      "Data isolation is enforced in the API, then proven with integration tests that try to cross the boundary and must be refused.",
-    result:
-      "Ticket workflow, comment and activity timeline, time tracking and an analytics dashboard, with 36 passing tests (24 unit, 12 integration).",
-    hardPart:
-      "Writing the tests that attack the isolation rules, not just the ones that confirm the happy path.",
-    link: { label: "View the code on GitHub", href: "https://github.com/MaryMagdy/support-ticket-management-system" },
-  },
 ];
 
 export type Tech = "React" | "Angular" | ".NET" | "Node.js" | "Python" | "SharePoint";
