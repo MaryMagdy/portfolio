@@ -279,64 +279,63 @@ export const pillars: Pillar[] = [
 export type Depth = 3 | 2 | 1;
 export const depthLabel: Record<Depth, string> = { 3: "Daily", 2: "Regular", 1: "When needed" };
 
-export type SkillGroup = { key: string; label: string; skills: { name: string; depth: Depth }[] };
+/** Line icons for tools that have no brand logo in the bundled set. */
+export type GlyphKey = "database" | "chart" | "share" | "plug" | "layers" | "network" | "flask" | "doc" | "boxes" | "gauge" | "sparkles" | "languages";
 
-export const skillGroups: SkillGroup[] = [
-  {
-    key: "front",
-    label: "Front end",
-    skills: [
-      { name: "TypeScript", depth: 3 },
-      { name: "React", depth: 3 },
-      { name: "Angular", depth: 3 },
-      { name: "Next.js", depth: 2 },
-      { name: "TanStack Query", depth: 2 },
-      { name: "Tailwind CSS and shadcn/ui", depth: 2 },
-      { name: "i18n and right-to-left layouts", depth: 2 },
-      { name: "jQuery", depth: 1 },
-    ],
-  },
-  {
-    key: "back",
-    label: "Back end",
-    skills: [
-      { name: "C# and ASP.NET Core", depth: 3 },
-      { name: "Node.js", depth: 3 },
-      { name: "NestJS", depth: 2 },
-      { name: "Express", depth: 2 },
-      { name: "Entity Framework Core and LINQ", depth: 2 },
-      { name: "PostgREST", depth: 2 },
-      { name: "Django", depth: 1 },
-      { name: "COM Interop and VB.NET", depth: 1 },
-    ],
-  },
-  {
-    key: "data",
-    label: "Data",
-    skills: [
-      { name: "PostgreSQL", depth: 3 },
-      { name: "SQL Server", depth: 3 },
-      { name: "Query optimisation", depth: 2 },
-      { name: "Stored procedures", depth: 2 },
-      { name: "Database design", depth: 2 },
-      { name: "Power BI", depth: 1 },
-    ],
-  },
-  {
-    key: "delivery",
-    label: "Architecture and delivery",
-    skills: [
-      { name: "Clean Architecture and SOLID", depth: 3 },
-      { name: "Role-based access (JWT, OAuth)", depth: 3 },
-      { name: "Microservices", depth: 2 },
-      { name: "Docker", depth: 2 },
-      { name: "GitHub Actions", depth: 2 },
-      { name: "Test-driven development", depth: 2 },
-      { name: "Jenkins", depth: 1 },
-      { name: "SharePoint and SPFx", depth: 1 },
-    ],
-  },
+export type SkillCategory = "Frontend" | "Backend" | "Data" | "DevOps" | "Architecture" | "AI" | "Enterprise";
+
+export const skillCategories: SkillCategory[] = ["Frontend", "Backend", "Data", "DevOps", "Architecture", "AI", "Enterprise"];
+
+export type Skill = {
+  name: string;
+  category: SkillCategory;
+  depth: Depth;
+  /** A key into src/lib/brands.ts, or a line icon. */
+  icon: { brand: import("./lib/brands").BrandKey } | { glyph: GlyphKey };
+};
+
+export const skills: Skill[] = [
+  { name: "TypeScript", category: "Frontend", depth: 3, icon: { brand: "typescript" } },
+  { name: "React", category: "Frontend", depth: 3, icon: { brand: "react" } },
+  { name: "Angular", category: "Frontend", depth: 3, icon: { brand: "angular" } },
+  { name: "Next.js", category: "Frontend", depth: 2, icon: { brand: "nextjs" } },
+  { name: "TanStack Query", category: "Frontend", depth: 2, icon: { brand: "tanstack" } },
+  { name: "Tailwind CSS", category: "Frontend", depth: 2, icon: { brand: "tailwind" } },
+  { name: "shadcn/ui", category: "Frontend", depth: 2, icon: { brand: "shadcn" } },
+  { name: "i18n and RTL layouts", category: "Frontend", depth: 2, icon: { brand: "i18next" } },
+  { name: "jQuery", category: "Frontend", depth: 1, icon: { brand: "jquery" } },
+  { name: "C# and .NET", category: "Backend", depth: 3, icon: { brand: "dotnet" } },
+  { name: "ASP.NET Core", category: "Backend", depth: 3, icon: { brand: "dotnet" } },
+  { name: "Node.js", category: "Backend", depth: 3, icon: { brand: "node" } },
+  { name: "NestJS", category: "Backend", depth: 2, icon: { brand: "nest" } },
+  { name: "Express", category: "Backend", depth: 2, icon: { brand: "express" } },
+  { name: "Entity Framework Core", category: "Backend", depth: 2, icon: { brand: "dotnet" } },
+  { name: "PostgREST", category: "Backend", depth: 2, icon: { glyph: "plug" } },
+  { name: "Django", category: "Backend", depth: 1, icon: { brand: "django" } },
+  { name: "Python", category: "Backend", depth: 1, icon: { brand: "python" } },
+  { name: "PostgreSQL", category: "Data", depth: 3, icon: { brand: "postgres" } },
+  { name: "SQL Server", category: "Data", depth: 3, icon: { glyph: "database" } },
+  { name: "Query optimisation", category: "Data", depth: 2, icon: { glyph: "gauge" } },
+  { name: "Supabase", category: "Data", depth: 2, icon: { brand: "supabase" } },
+  { name: "Power BI", category: "Data", depth: 1, icon: { glyph: "chart" } },
+  { name: "Git", category: "DevOps", depth: 3, icon: { brand: "git" } },
+  { name: "Docker", category: "DevOps", depth: 2, icon: { brand: "docker" } },
+  { name: "GitHub Actions", category: "DevOps", depth: 2, icon: { brand: "ghactions" } },
+  { name: "Vite", category: "DevOps", depth: 2, icon: { brand: "vite" } },
+  { name: "Jenkins", category: "DevOps", depth: 1, icon: { brand: "jenkins" } },
+  { name: "System design", category: "Architecture", depth: 3, icon: { glyph: "boxes" } },
+  { name: "Clean Architecture", category: "Architecture", depth: 3, icon: { glyph: "layers" } },
+  { name: "Role-based access and JWT", category: "Architecture", depth: 3, icon: { brand: "jwt" } },
+  { name: "Microservices", category: "Architecture", depth: 2, icon: { glyph: "network" } },
+  { name: "Test-driven development", category: "Architecture", depth: 2, icon: { glyph: "flask" } },
+  { name: "Architecture decision records", category: "Architecture", depth: 2, icon: { glyph: "doc" } },
+  { name: "Gemini API", category: "AI", depth: 2, icon: { brand: "gemini" } },
+  { name: "Prompt design", category: "AI", depth: 2, icon: { glyph: "sparkles" } },
+  { name: "SharePoint and SPFx", category: "Enterprise", depth: 1, icon: { glyph: "share" } },
 ];
+
+/** The logos that orbit the globe beside the skills grid. */
+export const orbitBrands: import("./lib/brands").BrandKey[] = ["react", "angular", "typescript", "dotnet", "node", "postgres", "docker", "nest"];
 
 export const facts = [
   { key: "location", label: "Based in", value: "Cairo, Egypt" },

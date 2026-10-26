@@ -1389,96 +1389,459 @@ main {
   color: var(--mono-text);
 }
 
-/* Skills mesh */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-  margin: -8px 0 20px;
-  font-size: 0.85rem;
+/* Skills: orbiting globe on the left, filterable toolbox on the right */
+.skills-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+  gap: 56px;
+  align-items: start;
 }
 
-.legend span {
+@media (max-width: 1080px) {
+  .skills-section {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.skills-section__visual {
+  position: sticky;
+  top: 110px;
+  display: grid;
+  gap: 18px;
+}
+
+@media (max-width: 1080px) {
+  .skills-section__visual {
+    position: static;
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.skills-section__head {
+  margin-bottom: 28px;
+}
+
+.toolbox-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin: 0 0 16px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.35);
 }
 
-.skills {
+.skills-section__title {
+  font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.grad-text {
+  background: linear-gradient(100deg, #a78bfa, #c084fc 40%, #67e8f9 90%) 0 0 / 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: name-flow 6s ease-in-out infinite alternate;
+}
+
+/* The globe and its orbit */
+.orbit {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+
+.orbit__rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.orbit__rings ellipse {
+  fill: none;
+  stroke: rgba(167, 139, 250, 0.35);
+  stroke-width: 0.25;
+  stroke-dasharray: 1.2 1.6;
+  animation: ring-run 30s linear infinite;
+}
+
+.orbit__rings .orbit__ring-outer {
+  stroke: rgba(34, 211, 238, 0.18);
+  stroke-dasharray: 0.6 2.4;
+  animation-duration: 45s;
+  animation-direction: reverse;
+}
+
+@keyframes ring-run {
+  to {
+    stroke-dashoffset: -60;
+  }
+}
+
+.globe {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 48%;
+  width: 48%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 35% 30%, #3b2a7a 0%, #1a1440 45%, #0a0820 75%);
+  box-shadow:
+    0 0 60px 6px rgba(139, 92, 246, 0.35),
+    0 0 140px 30px rgba(34, 211, 238, 0.08),
+    inset -18px -24px 60px rgba(0, 0, 0, 0.75),
+    inset 10px 10px 40px rgba(167, 139, 250, 0.25);
+  animation: globe-breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes globe-breathe {
+  to {
+    box-shadow:
+      0 0 80px 12px rgba(139, 92, 246, 0.45),
+      0 0 160px 40px rgba(34, 211, 238, 0.12),
+      inset -18px -24px 60px rgba(0, 0, 0, 0.75),
+      inset 10px 10px 40px rgba(167, 139, 250, 0.3);
+  }
+}
+
+/* Meridians slide sideways and latitudes stay put, so the sphere seems to spin */
+.globe__grid {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 12%, rgba(167, 139, 250, 0.1) 12% 12.4%),
+    repeating-linear-gradient(90deg, transparent 0 10%, rgba(103, 232, 249, 0.1) 10% 10.3%);
+  background-size:
+    100% 100%,
+    200% 100%;
+  animation: globe-spin 18s linear infinite;
+  border-radius: 50%;
+}
+
+@keyframes globe-spin {
+  to {
+    background-position:
+      0 0,
+      -200% 0;
+  }
+}
+
+.globe__shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(196, 181, 253, 0.28) 0%, transparent 28%),
+    radial-gradient(circle at 35% 30%, transparent 25%, rgba(5, 4, 20, 0.6) 62%, rgba(5, 4, 20, 0.95) 100%);
+}
+
+.globe__words {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  text-align: center;
+  transform: rotate(-6deg);
+  font-weight: 600;
+  font-size: clamp(1rem, 2.1vw, 1.45rem);
+  line-height: 1.15;
+  color: rgba(226, 232, 240, 0.85);
+  text-shadow: 0 0 18px rgba(167, 139, 250, 0.7);
+}
+
+.globe__words span {
+  animation: word-glow 8s ease-in-out infinite;
+}
+
+.globe__words span:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.globe__words span:nth-child(3) {
+  animation-delay: 4s;
+}
+
+.globe__words span:nth-child(4) {
+  animation-delay: 6s;
+}
+
+@keyframes word-glow {
+  0%,
+  30%,
+  100% {
+    color: rgba(226, 232, 240, 0.8);
+  }
+  12% {
+    color: #a5f3fc;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.9);
+  }
+}
+
+.orbit__tile {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  will-change: transform;
+}
+
+.orbit__icon {
+  display: grid;
+  place-items: center;
+  width: clamp(54px, 6.2vw, 78px);
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(49, 46, 129, 0.75), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  box-shadow:
+    0 12px 30px -12px rgba(0, 0, 0, 0.9),
+    0 0 24px -6px rgba(139, 92, 246, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.orbit__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px #000;
+}
+
+.quote-card {
+  position: relative;
+  margin: 0 auto;
+  max-width: 440px;
+  padding: 22px 24px 20px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.quote-card__mark {
+  position: absolute;
+  top: -18px;
+  left: 18px;
+  font-size: 3.4rem;
+  line-height: 1;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.quote-card p {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+/* Category chips */
+.toolbox__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  position: relative;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--body);
+  background: rgba(13, 19, 32, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  padding: 7px 15px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.chip[aria-pressed="true"] {
+  color: #fff;
+  border-color: transparent;
+}
+
+.chip__glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  box-shadow: 0 0 22px -4px rgba(124, 58, 237, 0.9);
+}
+
+.chip__text {
+  position: relative;
+}
+
+.toolbox__count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin: 16px 0 18px;
+  font-size: 0.88rem;
+}
+
+.toolbox__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--soft);
+  font-size: 0.8rem;
+}
+
+.toolbox__legend .bar {
+  display: inline-block;
+  width: 26px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.2);
+  position: relative;
+  overflow: hidden;
+  margin-left: 6px;
+}
+
+.toolbox__legend .bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+}
+
+.toolbox__legend .bar--2::after {
+  right: 33%;
+}
+
+.toolbox__legend .bar--1::after {
+  right: 66%;
+}
+
+/* Skill cards */
+.skill-cards {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px 16px;
-}
-
-@media (max-width: 760px) {
-  .skills {
-    grid-template-columns: 1fr;
-  }
-}
-
-.skill {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 90px;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 14px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  animation: card-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-.skill__name {
+.skill-card {
+  display: flex;
+  border-radius: 16px;
+}
+
+.skill-card__in {
+  width: 100%;
+  display: grid;
+  gap: 12px;
+  padding: 16px 16px 14px;
+  animation: card-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.skill-card__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.skill-card:hover .skill-card__icon {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 0 18px -4px rgba(139, 92, 246, 0.8);
+}
+
+.skill-card__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.skill-card__name {
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.25;
 }
 
-.skill__depth {
+.skill-card__depth {
+  flex: none;
   font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--soft);
-  text-align: right;
 }
 
-.meter {
-  display: inline-flex;
-  gap: 4px;
-}
-
-.meter b {
+.skill-card__track {
   display: block;
-  width: 22px;
-  height: 8px;
+  height: 5px;
   border-radius: 3px;
   background: rgba(148, 163, 184, 0.15);
+  overflow: hidden;
 }
 
-.legend .meter b {
-  width: 12px;
-  height: 6px;
+.skill-card__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8b5cf6, #6366f1 50%, #22d3ee);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
+  width: 0;
+  transition: width 1s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-/* Filled segments light up in cyan; the skills list waits until seen. */
-.meter--3 b,
-.meter--2 b:nth-child(-n + 2),
-.meter--1 b:first-child {
-  background: linear-gradient(90deg, var(--cyan-hi), var(--violet));
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.55);
+.toolbox.is-seen .skill-card__fill--3 {
+  width: 100%;
 }
 
-.js .skills .meter b {
-  transition:
-    background-color 0.3s ease,
-    opacity 0.4s ease,
-    transform 0.4s ease;
+.toolbox.is-seen .skill-card__fill--2 {
+  width: 66%;
 }
 
-.js .mesh-skills:not(.is-seen) .skills .meter b {
-  opacity: 0.2;
-  transform: scaleX(0.3);
+.toolbox.is-seen .skill-card__fill--1 {
+  width: 33%;
+}
+
+.skill-card__cat {
+  font-size: 0.8rem;
+  color: var(--soft);
+}
+
+.toolbox__more {
+  margin-top: 18px;
 }
 
 /* Experience timeline */
@@ -1756,8 +2119,16 @@ main {
     animation: none !important;
     transition: none !important;
   }
-  .js .reveal,
-  .js .mesh-skills:not(.is-seen) .skills .meter b {
+  .skill-card__fill--3 {
+    width: 100%;
+  }
+  .skill-card__fill--2 {
+    width: 66%;
+  }
+  .skill-card__fill--1 {
+    width: 33%;
+  }
+  .js .reveal {
     opacity: 1;
     transform: none;
   }

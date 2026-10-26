@@ -1,6 +1,6 @@
 # Mary Magdy Geady — portfolio
 
-A dark, console-style portfolio: a live neural-mesh background, a cinematic hero photo brought to life with layered animation (glowing monitors with code typing in, steam from the mug, twinkling city lights, pointer parallax), glass cards that tilt and light up under the pointer. Skills are shown by how often they are used (daily, regular, when needed) rather than invented percentages.
+A dark, console-style portfolio: a live neural-mesh background, a cinematic hero photo brought to life with layered animation (glowing monitors with code typing in, steam from the mug, twinkling city lights, pointer parallax), glass cards that tilt and light up under the pointer, and a skills toolbox beside a spinning globe orbited by logo tiles. Each skill bar shows how often the tool is used (daily, regular, when needed) rather than an invented percentage.
 
 It also carries a live **tag parser**: a small grammar engine where an equipment-tag format is data, not code. Switch client and the same engine reads a different format.
 

@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowUpRight, Download, Factory, Github, Linkedin, MapPin, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Download, Factory, Github, Linkedin, MapPin, ShieldCheck, Sparkles, Workflow, Zap } from "lucide-react";
 import { Contact } from "@/components/Contact";
 import { GlowCard } from "@/components/GlowCard";
 import { Nav } from "@/components/Nav";
@@ -8,9 +8,10 @@ import { LocalTime } from "@/components/LocalTime";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
 import { RoleTyper } from "@/components/RoleTyper";
-import { SkillsMesh } from "@/components/SkillsMesh";
+import { SkillsOrbit } from "@/components/SkillsOrbit";
+import { Toolbox } from "@/components/Toolbox";
 import { Stats } from "@/components/Stats";
-import { notes, pillars, profile, projects, revisions, roles, skillGroups, stats, techFilters } from "@/content";
+import { notes, orbitBrands, pillars, profile, projects, revisions, roles, skillCategories, skills, stats, techFilters } from "@/content";
 
 const pillarIcon = { workflow: Workflow, data: Factory, rules: ShieldCheck, ai: Sparkles } as const;
 
@@ -115,16 +116,32 @@ export default function Home() {
           </Reveal>
         </section>
 
-        <section className="section" aria-labelledby="skills-title" id="skills">
-          <SectionHead
-            id="skills-title"
-            kicker="skills"
-            title="Skills, by how often I use them"
-            intro="No made-up percentages. Each meter shows whether a tool is part of my daily work, something I use regularly, or one I reach for when a job needs it."
-          />
-          <Reveal>
-            <SkillsMesh groups={skillGroups} />
-          </Reveal>
+        <section className="section skills-section" aria-labelledby="skills-title" id="skills">
+          <div className="skills-section__visual">
+            <Reveal>
+              <SkillsOrbit items={orbitBrands} />
+            </Reveal>
+            <Reveal className="quote-card" delay={150}>
+              <span className="quote-card__mark" aria-hidden="true">
+                &ldquo;
+              </span>
+              <p>Tools change. Clear thinking and careful testing don&apos;t.</p>
+            </Reveal>
+          </div>
+          <div className="skills-section__main">
+            <Reveal className="skills-section__head">
+              <p className="toolbox-pill">
+                <Zap size={14} aria-hidden="true" /> My toolbox
+              </p>
+              <h2 id="skills-title" className="skills-section__title">
+                Skills that build <span className="grad-text">real systems</span>
+              </h2>
+              <p className="section__intro">The tools I use to turn paper processes and plant data into working software, and how often I reach for each one.</p>
+            </Reveal>
+            <Reveal>
+              <Toolbox skills={skills} categories={skillCategories} />
+            </Reveal>
+          </div>
         </section>
 
         <section className="section" aria-labelledby="experience-title" id="experience">
