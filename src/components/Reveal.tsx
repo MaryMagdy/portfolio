@@ -9,11 +9,14 @@ export function Reveal({
   children,
   as: Tag = "div",
   delay = 0,
+  threshold = 0.12,
   className,
 }: {
   children: ReactNode;
   as?: ElementType;
   delay?: number;
+  /** How much of the element must be visible before it appears. */
+  threshold?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -28,11 +31,11 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
+      { threshold, rootMargin: "0px 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [threshold]);
 
   return (
     <Tag ref={ref} className={`reveal ${className ?? ""}`} style={delay ? { transitionDelay: `${delay}ms` } : undefined}>

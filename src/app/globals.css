@@ -506,21 +506,6 @@ main {
   }
 }
 
-.hero__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 22px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
-  color: var(--mono-text);
-  background: rgba(10, 13, 20, 0.6);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(8px);
-}
-
 .hero__title {
   display: flex;
   flex-direction: column;
@@ -596,17 +581,6 @@ main {
 
 .hero__where svg {
   color: var(--violet-hi);
-}
-
-.clock {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.78rem;
-  color: var(--text);
-  padding: 4px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(10, 13, 20, 0.6);
-  font-variant-numeric: tabular-nums;
 }
 
 .hero__stats {
@@ -1073,18 +1047,6 @@ main {
   margin-bottom: 36px;
 }
 
-.kicker {
-  margin: 0 0 10px;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.8rem;
-  color: var(--mono-text);
-}
-
-.kicker__path::before {
-  content: "$ cd ";
-  color: var(--soft);
-}
-
 .section__title {
   font-size: clamp(2rem, 4.5vw, 3rem);
 }
@@ -1157,6 +1119,50 @@ main {
 .glow-card:hover::after {
   opacity: 1;
 }
+
+/* Pillar cards arrive one at a time as each scrolls into view: sliding in
+   from alternating sides, then the icon pops and the tags follow. */
+.js .pillar-reveal {
+  transition:
+    opacity 0.8s ease,
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.js .pillar-reveal--left:not(.is-in) {
+  opacity: 0;
+  transform: translate(-60px, 40px) scale(0.92);
+}
+
+.js .pillar-reveal--right:not(.is-in) {
+  opacity: 0;
+  transform: translate(60px, 40px) scale(0.92);
+}
+
+.js .pillar-reveal .pillar__icon {
+  transition: transform 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.45s;
+}
+
+.js .pillar-reveal:not(.is-in) .pillar__icon {
+  transform: scale(0) rotate(-90deg);
+}
+
+.js .pillar-reveal .tags li {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.js .pillar-reveal:not(.is-in) .tags li {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.js .pillar-reveal.is-in .tags li:nth-child(1) { transition-delay: 0.6s; }
+.js .pillar-reveal.is-in .tags li:nth-child(2) { transition-delay: 0.68s; }
+.js .pillar-reveal.is-in .tags li:nth-child(3) { transition-delay: 0.76s; }
+.js .pillar-reveal.is-in .tags li:nth-child(4) { transition-delay: 0.84s; }
+.js .pillar-reveal.is-in .tags li:nth-child(5) { transition-delay: 0.92s; }
+.js .pillar-reveal.is-in .tags li:nth-child(6) { transition-delay: 1s; }
 
 /* Pillars */
 .pillars {
@@ -2119,6 +2125,9 @@ main {
     animation: none !important;
     transition: none !important;
   }
+  .js .pillar-reveal:not(.is-in),
+  .js .pillar-reveal:not(.is-in) .pillar__icon,
+  .js .pillar-reveal:not(.is-in) .tags li,
   .js .reveal {
     opacity: 1;
     transform: none;

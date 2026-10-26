@@ -4,7 +4,6 @@ import { GlowCard } from "@/components/GlowCard";
 import { Nav } from "@/components/Nav";
 import { NeuralMesh } from "@/components/NeuralMesh";
 import { HeroMedia } from "@/components/HeroMedia";
-import { LocalTime } from "@/components/LocalTime";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
 import { RoleTyper } from "@/components/RoleTyper";
@@ -15,12 +14,9 @@ import { notes, orbitBrands, pillars, profile, projects, revisions, roles, skill
 
 const pillarIcon = { workflow: Workflow, data: Factory, rules: ShieldCheck, ai: Sparkles } as const;
 
-function SectionHead({ id, kicker, title, intro }: { id: string; kicker: string; title: string; intro?: string }) {
+function SectionHead({ id, title, intro }: { id: string; title: string; intro?: string }) {
   return (
     <Reveal className="section__head">
-      <p className="kicker">
-        <span className="kicker__path">~/{kicker}</span>
-      </p>
       <h2 id={id} className="section__title">
         {title}
       </h2>
@@ -44,10 +40,6 @@ export default function Home() {
           <HeroMedia />
           <div className="hero__inner">
             <div className="hero__text">
-              <p className="hero__status">
-                <i className="pulse" aria-hidden="true" />
-                Status: open to full-stack roles
-              </p>
               <h1 id="home-title" className="hero__title">
                 <span className="hero__hello">Hello, I&apos;m</span>
                 <span className="hero__name">{profile.name}</span>
@@ -75,7 +67,6 @@ export default function Home() {
                   <MapPin size={15} aria-hidden="true" />
                   Currently in {profile.location}
                 </span>
-                <LocalTime />
               </div>
             </div>
             <div className="hero__stats">
@@ -85,12 +76,12 @@ export default function Home() {
         </section>
 
         <section className="section" aria-labelledby="pillars-title" id="pillars">
-          <SectionHead id="pillars-title" kicker="pillars" title="What I build" intro={notes[0]} />
+          <SectionHead id="pillars-title" title="What I build" intro={notes[0]} />
           <ul className="pillars">
             {pillars.map((p, i) => {
               const Icon = pillarIcon[p.key];
               return (
-                <Reveal as="li" key={p.key} delay={i * 120}>
+                <Reveal as="li" key={p.key} delay={(i % 2) * 220} threshold={0.35} className={`pillar-reveal pillar-reveal--${i % 2 ? "right" : "left"}`}>
                   <GlowCard className={`pillar pillar--${p.key}`}>
                     <span className="pillar__icon" aria-hidden="true">
                       <Icon size={22} />
@@ -110,7 +101,7 @@ export default function Home() {
         </section>
 
         <section className="section" aria-labelledby="projects-title" id="projects">
-          <SectionHead id="projects-title" kicker="projects" title="All projects" intro="Work and personal projects. Company repositories are private, so those are described rather than linked." />
+          <SectionHead id="projects-title" title="All projects" intro="Work and personal projects. Company repositories are private, so those are described rather than linked." />
           <Reveal>
             <ProjectGrid projects={projects} filters={techFilters} />
           </Reveal>
@@ -145,7 +136,7 @@ export default function Home() {
         </section>
 
         <section className="section" aria-labelledby="experience-title" id="experience">
-          <SectionHead id="experience-title" kicker="experience" title="Experience" />
+          <SectionHead id="experience-title" title="Experience" />
           <ol className="timeline">
             {revisions.map((r, i) => (
               <Reveal as="li" key={r.rev} className="timeline__item" delay={i * 100}>
@@ -160,7 +151,7 @@ export default function Home() {
         </section>
 
         <section className="section" aria-labelledby="contact-title" id="contact">
-          <SectionHead id="contact-title" kicker="contact" title="Let's talk" intro="Hiring for a full-stack role, or have something to build? Reach me on any of these." />
+          <SectionHead id="contact-title" title="Let's talk" intro="Hiring for a full-stack role, or have something to build? Reach me on any of these." />
           <Reveal>
             <Contact />
           </Reveal>
