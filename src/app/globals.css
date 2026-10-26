@@ -19,8 +19,9 @@
   --soft: #64748b;
   --mono-text: #38bdf8;
   --radius: 14px;
-  /* Space between content and the screen edge; content spans the full width */
-  --gutter: clamp(16px, 4vw, 72px);
+  /* Space between content and the screen edge. Grows with the screen, and on
+     very wide screens keeps content to at most 1600px, centred. */
+  --gutter: max(clamp(16px, 5vw, 96px), calc((100vw - 1600px) / 2));
   --radius-sm: 8px;
   color-scheme: dark;
 }
