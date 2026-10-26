@@ -1700,148 +1700,148 @@ main {
 }
 
 .toolbox__count {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 20px;
   margin: 16px 0 18px;
   font-size: 0.88rem;
-}
-
-.toolbox__legend {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   color: var(--soft);
-  font-size: 0.8rem;
 }
 
-.toolbox__legend .bar {
-  display: inline-block;
-  width: 26px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(148, 163, 184, 0.2);
-  position: relative;
-  overflow: hidden;
-  margin-left: 6px;
-}
-
-.toolbox__legend .bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #8b5cf6, #22d3ee);
-}
-
-.toolbox__legend .bar--2::after {
-  right: 33%;
-}
-
-.toolbox__legend .bar--1::after {
-  right: 66%;
-}
-
-/* Skill cards */
-.skill-cards {
+/* Icon tiles: logo over name, rounded, with a violet outline */
+.skill-tiles {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
 }
 
-.skill-card {
-  display: flex;
-  border-radius: 16px;
+@media (max-width: 480px) {
+  .skill-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
 }
 
-.skill-card__in {
-  width: 100%;
+.skill-tile {
+  --cx: 50%;
+  --cy: 50%;
+  position: relative;
   display: grid;
+  justify-items: center;
+  align-content: center;
   gap: 12px;
-  padding: 16px 16px 14px;
-  animation: card-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  min-height: 128px;
+  padding: 20px 12px;
+  border-radius: 18px;
+  background: rgba(18, 18, 24, 0.85);
+  border: 1.5px solid rgba(139, 92, 246, 0.55);
+  overflow: hidden;
+  isolation: isolate;
+  cursor: default;
+  animation: tile-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.2),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.35s ease;
 }
 
-.skill-card__icon {
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+}
+
+/* Soft light that follows the pointer inside the tile */
+.skill-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(160px circle at var(--cx) var(--cy), rgba(139, 92, 246, 0.22), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.skill-tile:hover {
+  transform: translateY(-6px) scale(1.04);
+  border-color: #a855f7;
+  background-color: rgba(30, 27, 46, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.35),
+    0 18px 40px -16px rgba(124, 58, 237, 0.75),
+    0 0 28px -6px rgba(168, 85, 247, 0.55);
+}
+
+.skill-tile:hover::before {
+  opacity: 1;
+}
+
+.skill-tile__icon {
   display: grid;
   place-items: center;
-  width: 40px;
   height: 40px;
-  border-radius: 11px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.16);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
-.skill-card:hover .skill-card__icon {
-  transform: translateY(-2px) scale(1.06);
-  box-shadow: 0 0 18px -4px rgba(139, 92, 246, 0.8);
+.skill-tile:hover .skill-tile__icon {
+  transform: translateY(-3px) scale(1.18) rotate(-6deg);
+  filter: drop-shadow(0 6px 14px rgba(168, 85, 247, 0.55));
 }
 
-.skill-card__row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.skill-card__name {
-  color: var(--text);
+.skill-tile__name {
+  color: #e5e7eb;
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: 0.95rem;
+  text-align: center;
   line-height: 1.25;
+  transition: color 0.25s ease;
 }
 
-.skill-card__depth {
-  flex: none;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.68rem;
-  color: var(--soft);
+.skill-tile:hover .skill-tile__name {
+  color: #fff;
 }
 
-.skill-card__track {
-  display: block;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(148, 163, 184, 0.15);
-  overflow: hidden;
+/* A ring with a dot that follows the pointer while it is over a tile */
+.skill-tile__cursor {
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(226, 232, 240, 0.7);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1),
+    left 0.12s linear,
+    top 0.12s linear;
+  z-index: 2;
 }
 
-.skill-card__fill {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #8b5cf6, #6366f1 50%, #22d3ee);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
-  width: 0;
-  transition: width 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+.skill-tile__cursor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: #a855f7;
+  box-shadow: 0 0 10px #a855f7;
 }
 
-.toolbox.is-seen .skill-card__fill--3 {
-  width: 100%;
-}
-
-.toolbox.is-seen .skill-card__fill--2 {
-  width: 66%;
-}
-
-.toolbox.is-seen .skill-card__fill--1 {
-  width: 33%;
-}
-
-.skill-card__cat {
-  font-size: 0.8rem;
-  color: var(--soft);
-}
-
-.toolbox__more {
-  margin-top: 18px;
+@media (pointer: fine) {
+  .skill-tile:hover .skill-tile__cursor {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Experience timeline */
@@ -2118,15 +2118,6 @@ main {
   *::after {
     animation: none !important;
     transition: none !important;
-  }
-  .skill-card__fill--3 {
-    width: 100%;
-  }
-  .skill-card__fill--2 {
-    width: 66%;
-  }
-  .skill-card__fill--1 {
-    width: 33%;
   }
   .js .reveal {
     opacity: 1;

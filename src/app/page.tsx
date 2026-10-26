@@ -136,7 +136,7 @@ export default function Home() {
               <h2 id="skills-title" className="skills-section__title">
                 Skills that build <span className="grad-text">real systems</span>
               </h2>
-              <p className="section__intro">The tools I use to turn paper processes and plant data into working software, and how often I reach for each one.</p>
+              <p className="section__intro">The technologies and tools I use to turn paper processes and plant data into working software.</p>
             </Reveal>
             <Reveal>
               <Toolbox skills={skills} categories={skillCategories} />
