@@ -28,9 +28,16 @@ const cityLights: [number, number][] = [
 ];
 
 // Fixed pseudo-random particles, so server and client render the same markup.
+// Integer hashing only: Math.sin and friends can differ in the last digit
+// between Node and some browsers, which would break hydration.
 const particles = Array.from({ length: 22 }, (_, i) => {
-  const r = (n: number) => ((Math.sin(i * 97.13 + n * 13.7) + 1) / 2) % 1;
-  // Rounded so the server-rendered style strings match the client exactly.
+  const r = (n: number) => {
+    let h = Math.imul(i + 1, 2654435761) ^ Math.imul(n + 7, 1597334677);
+    h = Math.imul(h ^ (h >>> 15), 2246822507);
+    h ^= h >>> 13;
+    return (h >>> 0) / 4294967296;
+  };
+  // Rounded so the style strings are short and identical everywhere.
   const q = (v: number) => Math.round(v * 10) / 10;
   return { x: q(30 + r(1) * 70), delay: q(r(2) * 14), dur: q(10 + r(3) * 10), size: q(2 + r(4) * 3), drift: q((r(5) - 0.5) * 60) };
 });

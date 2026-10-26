@@ -23,7 +23,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: jsFlag }} />
       </head>
-      <body>{children}</body>
+      {/* Extensions such as Grammarly or password managers add attributes to
+          <body> before React loads; this keeps that from being reported as a
+          hydration error. It covers <body>'s own attributes only. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

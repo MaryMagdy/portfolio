@@ -16,14 +16,18 @@ export function GlowCard({ children, className, as = "div" }: { children: ReactN
   return (
     <MotionTag
       className={`glow-card ${className ?? ""}`}
-      style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 900 }}
+      // Same style on server and client (so hydration matches); reduced-motion
+      // visitors simply never move the values, so the card stays flat.
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
       onPointerMove={(e) => {
         if (e.pointerType !== "mouse") return;
         const r = e.currentTarget.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
-        px.set(x);
-        py.set(y);
+        if (!reduce) {
+          px.set(x);
+          py.set(y);
+        }
         e.currentTarget.style.setProperty("--mx", `${x * 100}%`);
         e.currentTarget.style.setProperty("--my", `${y * 100}%`);
       }}
