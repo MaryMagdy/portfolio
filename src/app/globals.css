@@ -1068,6 +1068,90 @@ main {
 .js .reveal.is-in {
   opacity: 1;
   transform: none;
+  transition-delay: var(--d, 0ms);
+}
+
+.js .reveal--left:not(.is-in) {
+  transform: translateX(-50px);
+}
+
+/* Scroll motion for cards, tiles and stats: plays on the way in and reverses
+   on the way out, every time. Uses the separate translate / scale / rotate
+   properties so it composes with hover transforms instead of replacing them. */
+.js [data-anim] {
+  transition:
+    opacity 0.6s ease,
+    translate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    rotate 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.js [data-anim].is-in {
+  transition-delay: var(--d, 0ms);
+}
+
+.js [data-anim]:not(.is-in) {
+  opacity: 0;
+}
+
+.js [data-anim="up"]:not(.is-in) {
+  translate: 0 40px;
+  scale: 0.95;
+}
+
+.js [data-anim="zoom"]:not(.is-in) {
+  translate: 0 26px;
+  scale: 0.7;
+}
+
+.js [data-anim="flip"] {
+  transform-origin: 50% 0;
+}
+
+.js [data-anim="flip"]:not(.is-in) {
+  translate: 0 30px;
+  rotate: x 70deg;
+}
+
+/* Project cards: the glass outline fades with its flipping contents */
+.card {
+  perspective: 900px;
+}
+
+.js .card {
+  transition:
+    opacity 0.5s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.js .card:has(> [data-anim]:not(.is-in)) {
+  opacity: 0;
+}
+
+/* Skill tiles keep their hover lift alongside the scroll motion */
+.js .skill-tile[data-anim] {
+  transition:
+    opacity 0.6s ease,
+    translate 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 0.7s cubic-bezier(0.3, 1.4, 0.5, 1),
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.2),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.35s ease;
+}
+
+.js .skill-tile[data-anim].is-in {
+  transition-delay: var(--d, 0ms), var(--d, 0ms), var(--d, 0ms), 0s, 0s, 0s, 0s;
+}
+
+/* Reduced motion, or no animation: everything simply in place */
+.no-anim [data-anim],
+.no-anim .card {
+  opacity: 1 !important;
+  translate: none !important;
+  scale: none !important;
+  rotate: none !important;
 }
 
 /* Glass cards with a pointer-following light on the border */
@@ -1126,6 +1210,10 @@ main {
   transition:
     opacity 0.8s ease,
     transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.js .pillar-reveal.is-in {
+  transition-delay: var(--d, 0ms);
 }
 
 .js .pillar-reveal--left:not(.is-in) {
@@ -1312,7 +1400,6 @@ main {
   flex-direction: column;
   width: 100%;
   padding: 20px;
-  animation: card-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 @keyframes card-in {
@@ -1744,7 +1831,6 @@ main {
   overflow: hidden;
   isolation: isolate;
   cursor: default;
-  animation: tile-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   transition:
     transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.2),
     border-color 0.3s ease,
@@ -2125,6 +2211,9 @@ main {
     animation: none !important;
     transition: none !important;
   }
+  .js [data-anim]:not(.is-in),
+  .js .card:has(> [data-anim]:not(.is-in)),
+  .js .reveal--left:not(.is-in),
   .js .pillar-reveal:not(.is-in),
   .js .pillar-reveal:not(.is-in) .pillar__icon,
   .js .pillar-reveal:not(.is-in) .tags li,

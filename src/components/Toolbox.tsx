@@ -40,7 +40,7 @@ export function Toolbox({ skills, categories }: { skills: Skill[]; categories: S
 
       <ul className="skill-tiles" key={filter}>
         {visible.map((s, i) => (
-          <li key={s.name} className="skill-tile" style={{ animationDelay: `${Math.min(i, 20) * 30}ms` }} onPointerMove={track}>
+          <li key={s.name} className="skill-tile" data-anim="zoom" style={{ ["--d" as string]: `${(i % 5) * 60}ms` }} onPointerMove={track}>
             <span className="skill-tile__cursor" aria-hidden="true" />
             <span className="skill-tile__icon">
               <SkillIcon icon={s.icon} size={34} />

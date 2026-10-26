@@ -6,6 +6,7 @@ import { NeuralMesh } from "@/components/NeuralMesh";
 import { HeroMedia } from "@/components/HeroMedia";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
+import { ScrollAnimator } from "@/components/ScrollAnimator";
 import { RoleTyper } from "@/components/RoleTyper";
 import { SkillsOrbit } from "@/components/SkillsOrbit";
 import { Toolbox } from "@/components/Toolbox";
@@ -34,6 +35,7 @@ export default function Home() {
       <NeuralMesh />
       <div className="glows" aria-hidden="true" />
       <Nav />
+      <ScrollAnimator />
 
       <main id="main">
         <section id="home" className="hero" aria-labelledby="home-title">
@@ -139,7 +141,7 @@ export default function Home() {
           <SectionHead id="experience-title" title="Experience" />
           <ol className="timeline">
             {revisions.map((r, i) => (
-              <Reveal as="li" key={r.rev} className="timeline__item" delay={i * 100}>
+              <Reveal as="li" key={r.rev} className="timeline__item reveal--left" delay={i * 120}>
                 <span className="timeline__node" aria-hidden="true" />
                 <p className="timeline__dates">{r.dates}</p>
                 <h3 className="timeline__title">{r.title}</h3>

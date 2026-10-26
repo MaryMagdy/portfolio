@@ -37,7 +37,7 @@ export function ProjectGrid({ projects, filters }: { projects: Project[]; filter
       <ul className="cards" key={filter}>
         {visible.map((p, i) => (
           <GlowCard key={p.title} as="li" className="card">
-            <div className="card__in" style={{ animationDelay: `${Math.min(i, 10) * 45}ms` }}>
+            <div className="card__in" data-anim="flip" style={{ ["--d" as string]: `${(i % 6) * 70}ms` }}>
               <div className="card__top">
                 <span className={`badge badge--${p.status.replace(" ", "-").toLowerCase()}`}>{p.status}</span>
                 <span className="card__client">{p.client}</span>

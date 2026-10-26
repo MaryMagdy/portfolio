@@ -17,8 +17,9 @@ export function Stats({ stats }: { stats: Stat[] }) {
     let frame = 0;
     const io = new IntersectionObserver(
       ([entry]) => {
+        // Count up again every time the row scrolls back into view.
         if (!entry.isIntersecting) return;
-        io.disconnect();
+        cancelAnimationFrame(frame);
         const start = performance.now();
         const duration = 1400;
         const step = (now: number) => {
@@ -41,7 +42,7 @@ export function Stats({ stats }: { stats: Stat[] }) {
   return (
     <dl ref={ref} className="stats">
       {stats.map((s, i) => (
-        <div key={s.label} className="stats__item">
+        <div key={s.label} className="stats__item" data-anim="up" style={{ ["--d" as string]: `${i * 110}ms` }}>
           <dt className="stats__label">{s.label}</dt>
           <dd className="stats__value">
             <span aria-hidden="true">
